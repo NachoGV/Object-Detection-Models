@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 import imgaug as ia
-from PIL import Image
 from torchvision.transforms import ToTensor
 from torchvision.datasets import CocoDetection
 from imgaug.augmentables.bbs import BoundingBox, BoundingBoxesOnImage

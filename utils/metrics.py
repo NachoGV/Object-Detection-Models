@@ -2,6 +2,7 @@
 import json
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
+from constants import TEST_COCO
 
 # Metrics
 import pandas as pd
@@ -11,10 +12,9 @@ import matplotlib.pyplot as plt
 def mAP_mAR(enhancement):
 
     # Paths
-    test_path = '../data/ExDark_COCO/test_set.json'
     results_path = f'../models/Transformer/lightning_logs/{enhancement}/output/results.json'
 
-    cocoGt = COCO(test_path)
+    cocoGt = COCO(TEST_COCO)
 
     # Predictions
     results_set = json.load(open(results_path, 'r'))

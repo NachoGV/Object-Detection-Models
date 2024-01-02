@@ -3,6 +3,7 @@ import cv2
 import torch
 import numpy as np
 import imgaug as ia
+from constants import *
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw   
 import torchvision.transforms as T
@@ -48,12 +49,11 @@ def plot_image_vs_prediction(image_id, test_path, model_path, width, enhancement
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     # CONSTANTS
-    imgs_path = "../data/ExDark_All/Images"
     image_processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50")
     colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'lime', 'teal', 'lavender']
 
     # Dataset Load
-    test_set = CocoDetection(image_directory_path=imgs_path,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
+    test_set = CocoDetection(image_directory_path=ALL_IMAGES,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
     id2label = {k: v["name"] for k, v in test_set.coco.cats.items()}
 
     # Original Image
@@ -61,7 +61,7 @@ def plot_image_vs_prediction(image_id, test_path, model_path, width, enhancement
     og_labels = og_anno['class_labels']
     og_boxes = og_anno['boxes']
     og_size = og_anno['size']
-    cv_image = cv2.imread(os.path.join(imgs_path, test_set.coco.loadImgs(image_id)[0]['file_name']))
+    cv_image = cv2.imread(os.path.join(ALL_IMAGES, test_set.coco.loadImgs(image_id)[0]['file_name']))
     cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
 
     # Predicted Image
@@ -127,19 +127,18 @@ def plot_image_vs_prediction(image_id, test_path, model_path, width, enhancement
 def plot_image(image_id, test_path, width, enhancement):
 
     # CONSTANTS
-    imgs_path = "../data/ExDark_All/Images"
     image_processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50")
     colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'lime', 'teal', 'lavender']
 
     # Dataset Load
-    test_set = CocoDetection(image_directory_path=imgs_path,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
+    test_set = CocoDetection(image_directory_path=ALL_IMAGES,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
 
     # Original Image
     og_image, og_anno = test_set[image_id]
     og_labels = og_anno['class_labels']
     og_boxes = og_anno['boxes']
     og_size = og_anno['size']
-    cv_image = cv2.imread(os.path.join(imgs_path, test_set.coco.loadImgs(image_id)[0]['file_name']))
+    cv_image = cv2.imread(os.path.join(ALL_IMAGES, test_set.coco.loadImgs(image_id)[0]['file_name']))
     cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
 
     # Plots - Preparation
@@ -164,18 +163,17 @@ def plot_prediction(image_id, test_path, model_path, width, enhancement):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     # CONSTANTS
-    imgs_path = "../data/ExDark_All/Images"
     image_processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50")
     colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'lime', 'teal', 'lavender']
 
     # Dataset Load
-    test_set = CocoDetection(image_directory_path=imgs_path,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
+    test_set = CocoDetection(image_directory_path=ALL_IMAGES,  annotation_file_path=test_path, image_processor=image_processor, enhancement=enhancement)
     id2label = {k: v["name"] for k, v in test_set.coco.cats.items()}
 
     # Original Image
     og_image, og_anno = test_set[image_id]
     og_size = og_anno['size']
-    cv_image = cv2.imread(os.path.join(imgs_path, test_set.coco.loadImgs(image_id)[0]['file_name']))
+    cv_image = cv2.imread(os.path.join(ALL_IMAGES, test_set.coco.loadImgs(image_id)[0]['file_name']))
     cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
 
     # Predicted Image

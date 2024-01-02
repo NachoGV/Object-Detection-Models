@@ -4,6 +4,7 @@ import json
 import torch
 import shutil
 from tqdm import tqdm
+from constants import *
 from datasets_generators import CocoDetection
 from transformers import DetrImageProcessor, DetrForObjectDetection
 
@@ -27,16 +28,10 @@ def data2COCO():
         "categories": [],
         }
 
-    # Paths
-    cat_dir = '../ExDark/ExDark'
-    anno_dir = '../ExDark_All/Annotations'
-    img_dir = '../ExDark_All/Images'
-    coc_dir = '../ExDark_COCO'
-
     print('Generating labels...')
 
     # Categories (Subfolders)
-    categories = os.listdir(cat_dir)
+    categories = os.listdir(CAT_IMAGES)
     for i, c in enumerate(categories):
         train_json["categories"].append({"id": i, 
                                         "name": c})
@@ -44,9 +39,6 @@ def data2COCO():
                                         "name": c})
         test_json["categories"].append({"id": i,
                                         "name": c})
-        
-    # Path List
-    img_list = os.listdir(img_dir)
 
     print('Splitting...')
 
@@ -54,8 +46,8 @@ def data2COCO():
     train_list = []
     val_list = []
     test_list = []
-    for subf in os.listdir(cat_dir):
-        subdir = os.path.join(cat_dir, subf)
+    for subf in os.listdir(CAT_IMAGES):
+        subdir = os.path.join(CAT_IMAGES, subf)
         imgs = os.listdir(subdir)
         train_list.extend(imgs[:250])
         val_list.extend(imgs[250:400])
@@ -76,7 +68,7 @@ def data2COCO():
         train_json["images"].append({"id": img_id,
                                     "file_name": img})
         # Annotations
-        with open(os.path.join(anno_dir, img + '.txt'), 'r') as f:
+        with open(os.path.join(ALL_ANNOTATIONS, img + '.txt'), 'r') as f:
             lines = f.readlines()[1:]
             for l in lines:
                 train_json['annotations'].append({"id": anno_id,
@@ -99,7 +91,7 @@ def data2COCO():
         val_json["images"].append({"id": img_id,
                                 "file_name": img})
         # Annotations
-        with open(os.path.join(anno_dir, img + '.txt'), 'r') as f:
+        with open(os.path.join(ALL_ANNOTATIONS, img + '.txt'), 'r') as f:
             lines = f.readlines()[1:]
             for l in lines:
                 val_json['annotations'].append({"id": anno_id,
@@ -122,7 +114,7 @@ def data2COCO():
         test_json["images"].append({"id": img_id,
                                     "file_name": img})
         # Annotations
-        with open(os.path.join(anno_dir, img + '.txt'), 'r') as f:
+        with open(os.path.join(ALL_ANNOTATIONS, img + '.txt'), 'r') as f:
             lines = f.readlines()[1:]
             n_lines = len(lines)
             for l in lines:
@@ -141,9 +133,9 @@ def data2COCO():
     print('Saving...')
 
     # Save Files
-    json.dump(train_json, open(os.path.join(coc_dir, 'train_set.json'), 'w'))
-    json.dump(val_json, open(os.path.join(coc_dir, 'val_set.json'), 'w'))
-    json.dump(test_json, open(os.path.join(coc_dir, 'test_set.json'), 'w'))
+    json.dump(train_json, open(TRAIN_COCO), 'w')
+    json.dump(val_json, open(VAL_COCO, 'w'))
+    json.dump(test_json, open(TEST_COCO, 'w'))
 
     print('Done')
 
