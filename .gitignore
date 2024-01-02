@@ -1,0 +1,15 @@
+# Config
+.vscode
+
+# Cache
+__pycache__/
+
+# Dataset
+data/
+*.zip
+
+# Yolo Outputs
+runs/
+
+# Transformer Outputs
+lightning_logs/
