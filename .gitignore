@@ -8,8 +8,5 @@ __pycache__/
 data/
 *.zip
 
-# Yolo Outputs
-runs/
-
-# Transformer Outputs
-lightning_logs/
+# Outputs
+Outputs/

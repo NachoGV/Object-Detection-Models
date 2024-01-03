@@ -2,7 +2,7 @@
 import json
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
-from constants import TEST_COCO
+from constants import TEST_COCO, DETR_OUT
 
 # Metrics
 import pandas as pd
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 def mAP_mAR(enhancement):
 
     # Paths
-    results_path = f'../models/Transformer/lightning_logs/{enhancement}/output/results.json'
+    results_path = DETR_OUT + f'/{enhancement}/output/results.json'
 
     cocoGt = COCO(TEST_COCO)
 
@@ -39,7 +39,7 @@ def mAP_mAR(enhancement):
 def training_evol(enhancement, legend=False):
         
     # Paths
-    model_path = f"../models/Transformer/lightning_logs/{enhancement}/output"
+    model_path = DETR_OUT + f'/{enhancement}/output'
         
     # Metrics during training
     df = pd.read_csv(model_path + '/metrics.csv')

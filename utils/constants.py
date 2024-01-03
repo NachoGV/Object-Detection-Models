@@ -23,3 +23,7 @@ TEST_YOLO_IMGS = '../data/ExDark_YOLO/images/test'
 TEST_YOLO_ANOS = '../data/ExDark_YOLO/annotations/test'
 YOLO_LABELS = '../data/ExDark_YOLO/labels'
 YOLO_YAML = '../data/ExDark_YOLO/yolo.yaml'
+
+# Outputs
+DETR_OUT = '../outputs/transformer'
+YOLO_OUT = '../outputs/yolo'
